@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}
+    Weather Page
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form method="POST" class="form-signin" style="color:white">
+        {{ form.hidden_tag() }}
+        <h1 class="h3 mb-3 font-weight-normal">
+            Search with a City Name 
+        </h1>
+        <br>
+        {{ form.search.label() }}
+        {{ form.search(class="form-control", placeholder="Search") }}
+
+        <br>
+
+        {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+
+    </form>
+</div>
+
+<p></p>
+<div class="container">
+    {% if status %}
+        <table class="table table-hover table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Min Temperature in (F)</th>
+                    <th scope="col">Max Temperature in (F)</th>
+                    <th scope="col">Day</th>
+                    <th scope="col">Night</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your rows inside the table HERE: -->
+                {% for item in data %}
+                <tr>
+                    <td>{{ item.Date }}</td>
+                    <td>{{ item.Temperature.Minimum.Value }}</td>
+                    <td>{{ item.Temperature.Maximum.Value }}</td>
+                    <td>{{ item.Day.IconPhrase }}</td>
+                    <td>{{ item.Night.IconPhrase }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <table class="table table-hover table-dark">
+            <tbody>
+                <tr>
+                    <td colspan="2">{{ data }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+{% endblock %}
